@@ -1,0 +1,73 @@
+use bun instead of npm
+
+use `bun ts-errors` to check TypeScript errors
+
+use `bun format` to run prettier when done
+
+use `bun test` to run tests, don't use jest or vite
+
+Never use Jest for mocking, always use bun's mocking functions
+
+document functions with JSDocs
+
+Tests should be written in a matching directory path within the `/__tests__/src` directory. They should never be within `/src`. For example, tests for `src/components/ui/input.tsx` should be within `/__tests__/src/components/ui/input.test.tsx` or tests for `src/lib/scrapers/uploadHtml.ts` should be `/__tests__/src/lib/scrapers/uploadHtml.test.tsx`
+
+use `bun lint` to run eslint
+
+Database is using prisma / postgresql
+
+Imports should always start with `@/` unless the file is in the same directory.
+
+
+GraphQL API Rules:
+GraphQL schema is written with pothos within src/gql/server
+
+GraphQL for the frontend is written with .graphql files within src/gql/client/entities and they use GraphQL Codegen to create src/gql/client/generated.ts that has all the React hooks for the frontend. `bun codegen` is used to run the codegen. GraphQL files should always be `.graphql` files.
+
+Here is an example for how to order in a GraphQL Query:
+```
+orderBy: {
+  createdAt: SortOrder.Desc,
+}
+```
+
+All GraphQL queries for lists should use `import { PaginationInput } from "@/gql/server/utils/inputs/pagination.input";` and there should be a WhereInput and an OrderByInput type created
+
+GraphQL server definitions should be using `import { builder } from "@/gql/server/builder";`
+
+GraphQL prismaFields that have a type that is an array (`type: [ENTITY]`) should always be `nullable: false`.
+
+Prisma types and inputs should use `builder.inputRef`, `builder.objectRef`, and `builder.interfaceRef` where possible. For example:
+```
+  const AddressOrderByInput =
+    builder.inputRef<Prisma.AddressOrderByWithRelationInput>(
+      "AddressOrderByInput"
+    );
+```
+
+UI Rules:
+When using `cn` from `clsx`, using `import { cn } from "@/lib/utils";`
+When possible, use radix ui, shadcn, tailwinds css.
+UI Components are in `src/components/ui`
+Common Components are in `src/components/common`
+Other features should be within `src/components/{FEATURE OR ENTITY NAME}`
+
+
+Logging:
+Backend logging should be using logs that look like this: `logger.error({ employeeId }, "[verifyEmployeeAccess] Access denied");`
+
+Logs are imported from the GqlContext from `src/app/api/graphql/route.ts` which is already added to the Yoga context for gql operations.
+
+```
+export type GqlContext = {
+  user: (User & { orgs: OrgMember[] }) | null;
+  logger: typeof baseLogger;
+};
+```
+
+Add emojis to the start of logs to make them easier to read:
+`logger.info({ id: parent.id }, "[OrgLicense] ⚡️ Checking compliance without additional database query");`
+
+Frontend logging should use the standard console.
+
+When using lodash, import the subpackage instead of the main package. For example, use `import uniqBy from "lodash/uniqBy";` instead of `import { uniqBy } from "lodash";`
