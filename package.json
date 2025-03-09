@@ -9,17 +9,18 @@
   "files": ["dist"],
   "scripts": {
     "dev": "bun run src/index.ts",
-    "build": "bun build ./src/index.ts --outdir ./dist --target node",
+    "build": "rm -rf dist && tsc && bun build ./src/index.ts --outdir ./dist --target node",
     "ts-errors": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"__tests__/**/*.{ts,tsx}\"",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "test": "bun test",
-    "prepublishOnly": "bun run build",
+    "prepublishOnly": "bun run build && bun format",
     "codegen": "graphql-codegen --config codegen.ts && prettier --write ./src/gql/client/generated.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "ladle": "ladle serve",
-    "build-ladle": "ladle build"
+    "build-ladle": "ladle build",
+    "vercel-deploy": "bun run build-ladle && bun format"
   },
   "keywords": ["react", "prisma", "graphql", "components", "utilities", "nextjs"],
   "author": "",

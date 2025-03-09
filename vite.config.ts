@@ -10,7 +10,19 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  // Support for Vercel deployment environment
+  build: {
+    // Output to the .ladle/dist directory for Vercel
+    outDir: process.env.VERCEL ? '.ladle/dist' : undefined,
+    // Ensure source maps for better debugging
+    sourcemap: true,
+    // Optimizations for production build
+    minify: 'terser',
+    // CSS handling
+    cssCodeSplit: true
+  },
   // Let Ladle handle Tailwind CSS through the global import in the stories
   // This avoids issues with ESM compatibility
 });
+
 

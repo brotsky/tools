@@ -3,6 +3,10 @@ export default {
   stories: 'src/**/*.stories.{js,jsx,ts,tsx}',
   port: 61000,
   previewPath: '/',
+  // Add base path support for Vercel deployment
+  base: process.env.VERCEL ? '/' : '/',
+  // Support for GitHub Pages deployment too if needed
+  // base: process.env.GITHUB_PAGES ? '/tools/' : '/',
   appendToHead: `
     <!-- Load Tailwind CSS Play CDN as per the official documentation -->
     <script src="https://cdn.tailwindcss.com"></script>
