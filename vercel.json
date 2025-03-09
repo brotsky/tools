@@ -1,7 +1,6 @@
 {
-  "framework": "vite",
-  "buildCommand": "bun run build-ladle",
-  "outputDirectory": ".ladle/dist",
+  "buildCommand": "bun run build-ladle && ls -la",
+  "outputDirectory": "build",
   "installCommand": "bun install",
   "cleanUrls": true
 }
