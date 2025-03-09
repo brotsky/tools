@@ -3,6 +3,5 @@
   "buildCommand": "bun run build-ladle",
   "outputDirectory": ".ladle/dist",
   "installCommand": "bun install",
-  "ignoreCommand": "bun ts-errors",
   "cleanUrls": true
 }
